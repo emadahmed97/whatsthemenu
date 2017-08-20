@@ -1,0 +1,51 @@
+include ./_reviewItemForm
+include ./_storeCard
+include ./_review
+
+mixin menuItemCard(menuItem = {})
+  .example-1.card
+    .wrapper
+      img(src=`/uploads/${menuItem.photo || 'store.png'}`)
+      .data
+        .itemcontent
+          |
+          h1.title
+            a(href=`/menuItems/item/${menuItem.slug}`) #{menuItem.name}
+          if menuItem.description
+            - var description = menuItem.description.substring(0,50)
+            - if (menuItem.description.length > 50) description += ' ...'
+            p.menuItemDescription #{description}
+          if user
+            .store__action.store__action--heart
+              form.heart(method="POST" action=`/api/items/${menuItem._id}/heart`)
+                - const heartStrings = user.heartsitem.map(obj => obj.toString())
+                - const heartClass = heartStrings.includes(menuItem._id.toString()) ? 'heart__button--hearted hearted-item' : ''
+                button.heart__button(type="submit" name="heart" class=heartClass)
+                  != h.icon('heart')
+          .openModalButton
+            button.btn.btn-primary(role='button',data-toggle='modal', data-id="2",data-target=`#${menuItem.slug}`) + Reviews
+      - var menuId = menuItem.slug
+      .modal.fade(role='dialog' id=menuId)
+        .modal-dialog
+          // Modal content
+          .modal-content
+            .modal-body
+              .single__details.inner
+                  button.close(type='button', data-dismiss='modal') &times;
+                  |
+                  img.modal_image(src=`/uploads/${menuItem.photo || 'store.png'}`)
+                  h5.modal-title.text-center #{menuItem.name}
+                  if menuItem.tags
+                    ul.tags
+                      each tag in menuItem.tags
+                        li.tag
+                          a.tag__link(href=`/tags/${tag}`)
+                            span.tag__text ##{tag}
+                  p #{description} #{menuItem.description}
+                  if user
+                    +reviewItemForm(menuItem)
+                  if menuItem.reviewItems
+                    .reviews
+                      each r in menuItem.reviewItems
+                        .review
+                          +review(r)

@@ -1,0 +1,7 @@
+extends layout
+include mixins/_menuItemForm
+
+block content
+  .inner
+    h2= title
+    +menuItemForm(stores)

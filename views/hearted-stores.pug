@@ -1,0 +1,10 @@
+extends layout
+include mixins/_storeCard
+
+
+block content
+  .inner
+    h2= Liked Items
+    .stores
+      each store in stores
+        +storeCard(store)

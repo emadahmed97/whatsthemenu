@@ -1,0 +1,33 @@
+extends layout
+
+include mixins/_reviewItemForm
+include mixins/_storeCard
+include mixins/_review
+
+block content
+  .single
+    .single__hero
+      img.single__image(src=`/uploads/${menuItem.photo || 'store.png'}`)
+      h2.title.title--single
+        a(href=`/menuItem/${menuItem.slug}`) #{menuItem.name}
+  .single__details.inner
+      h8 #{menuItem.description}
+      if menuItem.tags
+        ul.tags
+          each tag in menuItem.tags
+            li.tag
+              a.tag__link(href=`/tags/${tag}`)
+                span.tag__text ##{tag}
+      if user
+        +reviewItemForm(menuItem)
+      if menuItem.reviewItems.length
+        h5 Reviews:
+        .reviews
+          each r in menuItem.reviewItems
+            .review
+              +review(r)
+      .store__details
+        h5 Available at:
+          if store
+            .single
+              +storeCard(store)

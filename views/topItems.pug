@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  .inner
+    h2 Top #{items.length} Items
+    h.dump(items)
+    table.table
+      thead
+        td
+        td Food
+        td Restaurant
+        td Average Rating
+      each item, i in items
+        tr
+          td
+            a(href=`/store/${item.slug}`)
+              img(width=200 src=`/uploads/${item.photo || 'store.png'}` alt=item.name)
+          td.storenamesecondary: a(href=`/stores/${item.slug}`)= item.name
+          if item.storeItem.length
+            for store in item.storeItem
+              if store.name
+                td.storenamesecondary: a(href=`/store/${store.slug}`)= store.name
+          else
+            td.storenamesecondary N/A
+          td.storenamesecondary #{Math.round(item.averageRating * 10) / 10} / 5

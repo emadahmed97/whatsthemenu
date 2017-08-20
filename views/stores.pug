@@ -1,0 +1,22 @@
+extends layout
+include mixins/_storeCard
+include mixins/_pagination
+include mixins/_menuItemCard
+
+block content
+  .inner
+    if !items
+      +pagination(page, pages, count)
+    if items
+      h2 Liked Items and Stores
+      .items(style='display:flex; flex-wrap: wrap;')
+        each item in items
+          +menuItemCard(item)
+    if !items
+      h2 Stores
+    .stores
+      each store in stores
+        if store.name.length
+          +storeCard(store)
+    if !items
+      +pagination(page, pages, count)

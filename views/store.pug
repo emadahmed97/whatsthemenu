@@ -1,0 +1,49 @@
+extends layout
+
+include mixins/_reviewForm
+include mixins/_review
+include mixins/_menuItemCard
+
+block content
+  .single__details.inner
+    h2
+      a(href=`/stores/${store.slug}`) #{store.name}
+    .address(style='display:flex;')
+      i.fa.fa-map-marker.fa-2x(style='margin-right:9px;margin-left:8px;')
+      - var address = store.location.address ? store.location.address : store.fulladdress
+      .text
+        p= address
+    - var replaced = store.location.address ? store.location.address.split(' ').join('+') : store.fulladdress.split(' ').join('+').slice(0,-8);
+    - if (replaced) replaced = replaced.split(',').join('');
+    .directions(style='margin-bottom:30px;display:flex')
+      i.fa.fa-road.fa-2x
+      a.btn.btn-primary(href=`https://www.google.com/maps/dir/Current+Location/${replaced}` target='blank' style='margin-left:3px;padding: 3px 6px;') Get Directions
+    img(src=`/uploads/${store.photo || 'store.png'}` style='width:700px;height:300px;')
+    .storedescription(style='margin-top:10px;')
+      h8 #{store.description}
+    if store.tags
+      ul.tags
+        each tag in store.tags
+          li.tag
+            a.tag__link(href=`/tags/${tag}`)
+              span.tag__text ##{tag}
+    if store.menuItems.length
+      h5 Menu items:
+      .storeMenuItems
+        each item in store.menuItems
+          +menuItemCard(item)
+    if store.reviewStores.length
+      h5 Store Reviews:
+      .reviews
+        each r in store.reviewStores
+          .review
+            +review(r)
+    if user
+      +reviewForm(store)
+    a.btn.btn-primary(href='/menuitems/add' target='_blank') Add Menu Item to #{store.name}
+    if store.location.address
+      img.single__map(src=h.staticMap(store.location.coordinates) style='margin:0px;')
+    if store.location.address
+      p.single__location= store.location.address
+    else
+      p.single__location= store.Address

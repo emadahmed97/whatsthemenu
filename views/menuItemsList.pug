@@ -1,0 +1,8 @@
+extends layout
+include mixins/_menuItemCard
+include mixins/_pagination
+
+
+block content
+  each item in menuItems
+    +menuItemCard(item)

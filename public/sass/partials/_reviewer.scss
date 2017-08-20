@@ -1,0 +1,85 @@
+.reviewer {
+  position: relative;
+  box-shadow: 0 0px 10px rgba(0,0,0,0.2);
+  margin-bottom: 2rem;
+  &__stars {
+    display: flex;
+    justify-content: center;
+    input {
+      display: none;
+      &:checked {
+        & ~ label {
+          color: $yellow;
+        }
+      }
+      & + label {
+        font-size: 0;
+        &:before {
+          content: '★';
+          font-size: 2rem;
+        }
+
+        &[for="star5"] { order: 5; }
+        &[for="star4"] { order: 4; }
+        &[for="star3"] { order: 3; }
+        &[for="star2"] { order: 2; }
+        &[for="star1"] { order: 1; }
+        &:hover, &:hover ~ label {
+          color: lighten($yellow,20%);
+        }
+      }
+    }
+  }
+  textarea {
+    border: 0;
+    outline: 0;
+    font-size: 2rem;
+    padding: 2rem;
+    height: 200px;
+  }
+  &__meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & > * {
+      flex: 1;
+    }
+  }
+}
+
+.rating-stars {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    width: 8em;
+}
+
+.rating-stars input {
+    position: absolute;
+    left: -999999px;
+}
+
+.rating-stars label {
+    display: inline-block;
+    font-size: 0;
+}
+
+.rating-stars > label:before {
+    position: relative;
+    font: 24px/1 FontAwesome;
+    display: block;
+    content: "\f005";
+    color: #ccc;
+    background: -webkit-linear-gradient(-45deg, #1adbd7 0%, #b3b3b3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.rating-stars > label:hover:before,
+.rating-stars > label:hover ~ label:before,
+.rating-stars > label.selected:before,
+.rating-stars > label.selected ~ label:before {
+    color: #f0ad4e;
+    background: -webkit-linear-gradient(-45deg, #fcb551 0%, #d69a45 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

@@ -1,0 +1,30 @@
+mixin pagination(page, pages, count)
+  .pagination
+    a(href='/stores/page/1' style='padding-left:5px;') First
+    .pagination__prev
+      if page > 1
+        a(href=`/stores/page/${page - 1}`) Prev
+    .pagenumber
+      h12 Page #{page} of #{pages}
+    .pagination__list
+      - var list = []
+      - var start = page;
+      - var end = parseInt(page) + parseInt(15);
+      - if (page < pages) {
+      - for (var i = start; i <= end; i++) {
+      -    list.push(i)
+      - }
+      - }
+
+      ul.pagination
+        each pg in list
+          if pg==page
+            li.active
+              a(href=`/stores/page/${pg}`) #{pg}
+          else
+            li
+              a(href=`/stores/page/${pg}`) #{pg}
+    .pagination__next
+      if page < pages
+        a(href=`/stores/page/${parseFloat(page) + 1}`) Next
+    a(href=`/stores/page/${pages}` style='padding-left:5px;') Last

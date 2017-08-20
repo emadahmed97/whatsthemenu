@@ -1,0 +1,52 @@
+mixin storeCard(store = {})
+  .store
+    .store__hero
+      .store__actions
+        if user
+          .store__action.store__action--heart
+            form.heart(method="POST" action=`/api/stores/${store._id}/heart`)
+              - const heartStrings = user.hearts.map(obj => obj.toString())
+              - const heartClass = heartStrings.includes(store._id.toString()) ? 'heart__button--hearted' : ''
+              button.heart__button(type="submit" name="heart" class=heartClass)
+                != h.icon('heart')
+        if user && store.author.equals(user._id)
+          .store__action.store__action--edit
+            a(href=`/stores/${store._id}/edit`)
+              != h.icon('pencil')
+        if store.reviews
+          .store__action.store__action--count
+            != h.icon('review')
+            span= store.reviews.length
+      img(src=`/uploads/${store.photo || 'store.png'}`)
+      h2.title
+        if store.slug
+          a(href=`/store/${store.slug}`) #{store.name}
+        else
+          - var Text = store.name;
+          - Text = Text.toLowerCase();
+          - var regExp = /\s+/g;
+          - Text = Text.replace(regExp,'-');
+          a(href=`/store/${Text}`) #{store.name}
+    .store__details
+      p= store.fulladdress
+      p= store.description.split(' ').slice(0, 25).join(' ')
+      if store.menuItems.length && showMenuItems
+        .menuItemTitle
+          h7.topMenuItems(style='color:#003366;font-size: 25px;') Top Menu Items:
+        .list-group
+          each item in store.menuItems
+            a.list-group-item.list-group-item-action.flex-column.align-items-start(href=`/menuItems/item/${item.slug}`)
+              .d-flex.w-100.justify-content-between
+                h7.mb-1(style='font-size: 20px;') #{item.name}
+              |
+              img.modal_image(src=`/uploads/${item.photo || 'store.png'}`)
+              |
+              p.mb-1
+                | #{item.description}
+            |
+            if item.tags.length
+              ul.tags.tags-store-card
+                each tag in item.tags
+                  li.tag
+                    a.tag__link(href=`/tags/${tag}`)
+                      span.tag__text ##{tag}
