@@ -9,7 +9,7 @@ mixin storeCard(store = {})
               - const heartClass = heartStrings.includes(store._id.toString()) ? 'heart__button--hearted' : ''
               button.heart__button(type="submit" name="heart" class=heartClass)
                 != h.icon('heart')
-        if user && store.author.equals(user._id)
+        if user
           .store__action.store__action--edit
             a(href=`/stores/${store._id}/edit`)
               != h.icon('pencil')
@@ -34,19 +34,18 @@ mixin storeCard(store = {})
         .menuItemTitle
           h7.topMenuItems(style='color:#003366;font-size: 25px;') Top Menu Items:
         .list-group
+          - var count = 0
           each item in store.menuItems
-            a.list-group-item.list-group-item-action.flex-column.align-items-start(href=`/menuItems/item/${item.slug}`)
-              .d-flex.w-100.justify-content-between
-                h7.mb-1(style='font-size: 20px;') #{item.name}
+            - count = count + 1
+            if count < 6
+              a.list-group-item.list-group-item-action.flex-column.align-items-start(href=`/menuItems/item/${item.slug}`)
+                .d-flex.w-100.justify-content-between
+                  h7.mb-1(style='font-size: 20px;') #{item.name}
+                |
+                img.modal_image(src=`/uploads/${item.photo || 'store.png'}`)
+                |
+                p.mb-1
+                  | #{item.description}
+                if item.reviews
+                button.btn.btn-primary(href=`/menuItems/item/${item.slug}`) + Reviews
               |
-              img.modal_image(src=`/uploads/${item.photo || 'store.png'}`)
-              |
-              p.mb-1
-                | #{item.description}
-            |
-            if item.tags.length
-              ul.tags.tags-store-card
-                each tag in item.tags
-                  li.tag
-                    a.tag__link(href=`/tags/${tag}`)
-                      span.tag__text ##{tag}

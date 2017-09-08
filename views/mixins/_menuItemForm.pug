@@ -22,7 +22,7 @@ mixin menuItemForm(menuItem = {})
         if menuItem.photo
           img(src=`/uploads/${menuItem.photo}`, alt=menuItem.name width=200)
 
-    - const choices = ['Vegetarian', 'Vegan', 'Spicy', 'Mild', 'Vietnamese', 'Greek', 'Italian', 'Pakistani', 'Fillipino', 'Thai', 'Japanese', 'Chinese', 'Indian', 'Spanish', 'French', 'Mexican', 'Korean', 'American']
+    - const choices = ['Vegetarian', 'Vegan', 'Spicy', 'Mild', 'Vietnamese', 'Greek', 'Italian', 'Pakistani', 'Fillipino', 'Thai', 'Japanese', 'Chinese', 'Indian', 'Spanish', 'French', 'Mexican', 'Korean', 'American', 'Coffee', 'Dessert', 'Drink', 'Mediterranean']
     h7 Type of Cuisine:
     ul.tags(style='display: flex;')
     - const tags = menuItem.tags || []

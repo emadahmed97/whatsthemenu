@@ -90,6 +90,29 @@ storeSchema.statics.getTopStores = function() {
   ]);
 }
 
+storeSchema.statics.getTopReviewStores = function() {
+  return this.aggregate([
+    { $lookup: {from: 'menuitems', localField: '_id',
+    foreignField: 'store', as: 'items'}},
+    { $match: {'items': { $exists: true} } },
+    { $project: {
+      photo: '$$ROOT.photo',
+      name: '$$ROOT.name',
+      reviews: '$$ROOT.reviews',
+      slug: '$$ROOT.slug',
+      fulladdress: '$$ROOT.fulladdress',
+      description: '$$ROOT.description',
+      tags: '$$ROOT.tags',
+      created: '$$ROOT.created',
+      location: '$$ROOT.location',
+      author: '$$ROOT.author',
+      menuItems: '$items',
+      averageRating:{ $size: '$items'},
+    }},
+    { $sort: {averageRating: -1} },
+  ]);
+}
+
 // find reviews that connect up to a store
 storeSchema.virtual('reviewStores', {
   ref: 'ReviewStore', // which model to link

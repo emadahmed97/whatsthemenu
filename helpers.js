@@ -22,7 +22,7 @@ exports.storeName = (id) =>  Store.findOne({ _id: id}).name;
 exports.siteName = `Whats the Menu`;
 
 exports.menu = [
-  { slug: '/stores', title: 'Stores', faicon: 'fa-shopping-cart fa-2x', },
+  { slug: '/stores', title: 'Restaurants', faicon: 'fa-shopping-cart fa-2x', },
   { slug: '/tags', title: 'Tags', faicon: 'fa-tag fa-2x', },
   { slug: '/topstores', title: 'Top Stores', faicon: 'fa-trophy fa-2x', },
   { slug: '/topitems', title: 'Top Items', faicon: 'fa-trophy fa-2x', },
