@@ -170,3 +170,22 @@ exports.getTopStores = async (req,res) => {
   const stores = await Store.getTopStores();
   res.render('topStores', {title:'Top Stores', stores});
 }
+/*
+function getJSON(){
+
+    return new Promise( function(resolve) {
+        axios.get('example.json')
+            .then( function(json) {
+                resolve(json);
+            });
+    });
+
+}
+
+VS
+
+async function getJSONAsync(){
+    let json = await axios.get('example.json');
+    return json;
+}
+*/

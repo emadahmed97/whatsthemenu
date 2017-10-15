@@ -36,10 +36,8 @@ exports.createMenuItem = async (req, res) => {
 };
 
 exports.getMenuItem = async (req,res) => {
-  const menuItemPromise = await MenuItem.findOne({slug: req.params.slug});
-  const storePromise =  await Store.findOne({ _id: menuItemPromise.store});
-
-  const [menuItem, store] = await Promise.all([menuItemPromise, storePromise]);
+  const menuItem = await MenuItem.findOne({slug: req.params.slug});
+  const store =  await Store.findOne({ _id: menuItem.store});
   res.render('menuItem', {title: `${menuItem.name}`, menuItem, store});
 };
 
