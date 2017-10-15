@@ -27,5 +27,4 @@ exports.menu = [
   { slug: '/topstores', title: 'Top Stores', faicon: 'fa-trophy fa-2x', },
   { slug: '/topitems', title: 'Top Items', faicon: 'fa-trophy fa-2x', },
   { slug: '/menuitems/add', title: 'Add Item', faicon: 'fa-plus fa-2x', },
-  { slug: '/map', title: 'Map', faicon: 'fa-map fa-2x', },
 ];
